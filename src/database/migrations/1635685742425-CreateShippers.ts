@@ -10,8 +10,10 @@ export class CreateShippers1635685742425 implements MigrationInterface {
                 columns:[
                     {
                         name:"id",
-                        type:"number",
+                        type:"integer",
                         isPrimary:true,
+                        isGenerated:true,
+                        generationStrategy:'increment'
                     },
                     {
                         name:"name",

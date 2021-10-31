@@ -1,10 +1,10 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('transporters')
 class Transporter{
 
-    @PrimaryColumn()
-    readonly id:number;
+    @PrimaryGeneratedColumn()
+    public id:number;
 
     @Column()
     name:string;
@@ -20,15 +20,6 @@ class Transporter{
 
     @Column()
     active: boolean;
-
-
-    static nextId = 0;
-
-    constructor(){
-        if(!this.id){
-            this.id = Transporter.nextId++;        
-        }
-    }
 
 }
 

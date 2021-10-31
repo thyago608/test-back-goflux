@@ -9,8 +9,10 @@ export class CreateTransporter1635702102602 implements MigrationInterface {
                 columns:[
                     {
                         name: "id",
-                        type: "number",
-                        isPrimary:true
+                        type: "integer",
+                        isPrimary:true,
+                        isGenerated:true,
+                        generationStrategy:'increment'
                     },
                     {
                         name: "name",

@@ -1,10 +1,10 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, Timestamp } from 'typeorm';
 
 @Entity("shippers")
 class Shipper{
 
-    @PrimaryColumn()
-    readonly id: number;
+    @PrimaryGeneratedColumn()
+    public id: number;
 
     @Column()
     name: string;
@@ -20,15 +20,6 @@ class Shipper{
 
     @Column()
     active: boolean;
-    
-
-    static nextId = 0;
-
-    constructor(){
-        if(!this.id){
-            this.id = Shipper.nextId++;
-        }
-    }
 }
 
 export { Shipper }

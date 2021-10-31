@@ -1,16 +1,15 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
-import { Shipper } from '../models/Shipper';
 import { ShippersRepository } from '../repositories/ShipperRepository';
 
 /*
-    {
-    "id": 1,
-    "name": "goFlux Brasil",
-    "doc": "60.429.484/0001-10",
-    "about": "goFlux, uma empresa especializada em inovar na contratação de fretes",
-    "active": true,
-    "site": "https://goflux.com.br/"
+ {
+  "id": 1,
+  "name": "goFlux Brasil",
+  "doc": "60.429.484/0001-10",
+  "about": "goFlux, uma empresa especializada em inovar na contratação de fretes",
+  "active": true,
+  "site": "https://goflux.com.br/"
 }
 */
 
@@ -26,7 +25,7 @@ class ShipperController{
             site
         } = request.body;
         
-        //Criando um repositório
+        //Acessando o repositório de Shippers
         const shippersRepository = getCustomRepository(ShippersRepository);
 
         //SELECT * FROM shippers WHERE doc = doc
@@ -35,10 +34,8 @@ class ShipperController{
         });
 
         if(shipperAlreadyExists){
-            Shipper.nextId--;
-            
             return response.status(400).json({
-                error: "User already exists!"
+                error: "Shipper already exists!"
             })
         }
 
@@ -53,10 +50,18 @@ class ShipperController{
         await shippersRepository.save(shipper);
 
 
-        response.status(200).json({
-            shipper,
-            message:"Shipper Created"
+        response.status(201).json({
+            message:"Shipper Created Successfully"
         });
+    }
+
+    async show(request:Request, response:Response){
+        //Acessando o repositório de Shippers
+        const shippersRepository = getCustomRepository(ShippersRepository);
+    
+        const all = await shippersRepository.find();
+
+        return response.json(all);
     }
 }
 
