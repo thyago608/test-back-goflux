@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryColumn, Timestamp } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity("shippers")
 class Shipper{

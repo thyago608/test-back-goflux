@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
 import { Shipper } from '../models/Shipper';
+import { ShippersRepository } from '../repositories/ShipperRepository';
+
 /*
     {
     "id": 1,
@@ -25,7 +27,7 @@ class ShipperController{
         } = request.body;
         
         //Criando um repositório
-        const shippersRepository = getRepository(Shipper);
+        const shippersRepository = getCustomRepository(ShippersRepository);
 
         //SELECT * FROM shippers WHERE doc = doc
         const shipperAlreadyExists = await shippersRepository.findOne({
