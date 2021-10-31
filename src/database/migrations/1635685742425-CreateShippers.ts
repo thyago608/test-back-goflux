@@ -1,15 +1,5 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-/*
-    {
-    "id": 1,
-    "name": "goFlux Brasil",
-    "doc": "60.429.484/0001-10",
-    "about": "goFlux, uma empresa especializada em inovar na contratação de fretes",
-    "active": true,
-    "site": "https://goflux.com.br/"
-}
-*/
 export class CreateShippers1635685742425 implements MigrationInterface {
 
     //Criar tabela
@@ -20,7 +10,7 @@ export class CreateShippers1635685742425 implements MigrationInterface {
                 columns:[
                     {
                         name:"id",
-                        type:"uuid",
+                        type:"number",
                         isPrimary:true,
                     },
                     {
