@@ -1,14 +1,31 @@
-import express from "express";
+import express from 'express';
 
 const routes = express.Router();
 
-routes.get("/", (resquest, response) => {
-  const data = [
-    { id: 1, name: "Thyago", surname: "Ribeiro" },
-    { id: 2, name: "Rafael", surname: "Aires" },
-  ];
+routes.get('/', (request, response) => {
 
-  response.json(data);
+  response.status(200).json({message:"Method GET running"});
 });
 
+routes.post('/create',(request, response)=>{
+
+  response.status(200).json({message: "Method POST Running"});
+});
+
+
 export default routes;
+
+
+/*
+
+    {
+    "id": 1,
+    "name": "goFlux Brasil",
+    "doc": "60.429.484/0001-10",
+    "about": "goFlux, uma empresa especializada em inovar na contratação de fretes",
+    "active": true,
+    "site": "https://goflux.com.br/"
+}
+
+
+*/
