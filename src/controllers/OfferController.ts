@@ -16,7 +16,7 @@ import { Request, Response } from 'express';
 
 class OfferController{
     async create(request:Request, response:Response){
-        return response.json({
+        return response.status(201).json({
             message:"Created Offer"
         });
     }

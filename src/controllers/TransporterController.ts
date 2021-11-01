@@ -61,10 +61,9 @@ class TransporterController{
         //Acessando o repositório de Transporter
         const transporterRepository = getCustomRepository(TransportersRepository);
 
-        console.log(transporterRepository);
         const all = await transporterRepository.find();
 
-        return response.json(all);
+        return response.status(201).json(all);
     }
 }
 
