@@ -1,25 +1,24 @@
-import { Column, Entity, PrimaryGeneratedColumn, Timestamp } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("shippers")
-class Shipper{
+class Shipper {
+  @PrimaryGeneratedColumn()
+  public id: number;
 
-    @PrimaryGeneratedColumn()
-    public id: number;
+  @Column()
+  name: string;
 
-    @Column()
-    name: string;
-    
-    @Column()
-    doc: string;
+  @Column()
+  doc: string;
 
-    @Column()
-    about: string;
-    
-    @Column()
-    site: string;
+  @Column()
+  about: string;
 
-    @Column()
-    active: boolean;
+  @Column()
+  site: string;
+
+  @Column()
+  active: boolean;
 }
 
-export { Shipper }
+export { Shipper };

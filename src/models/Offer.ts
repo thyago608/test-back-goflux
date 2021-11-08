@@ -12,7 +12,7 @@ class Offer{
     @Column()
     from:string;
 
-     @Column()
+    @Column()
     to:string;
     
     @Column()
