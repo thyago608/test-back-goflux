@@ -13,17 +13,25 @@ const throwsController = new ThrowController();
 routes.post("/shipper", shipperController.create);
 routes.get("/shipper", shipperController.show);
 routes.get("/shipper/:id", shipperController.showOne);
+routes.put("/shipper/:id", shipperController.update);
+routes.delete("/shipper/:id", shipperController.delete);
 
 routes.post("/transporter", transporterController.create);
 routes.get("/transporter", transporterController.show);
 routes.get("/transporter/:id", transporterController.showOne);
+routes.put("/transporter/:id", transporterController.update);
+routes.delete("transporter/:id", transporterController.delete);
 
 routes.post("/offer", offerController.create);
 routes.get("/offer", offerController.show);
 routes.get("/offer/:id", offerController.showOne);
+routes.put("/offer/:id", offerController.update);
+routes.delete("offer/:id", offerController.delete);
 
 routes.post("/throw", throwsController.create);
 routes.get("/throw", throwsController.show);
 routes.get("/throw/:id", throwsController.showOne);
+routes.put("/throw/:id", throwsController.update);
+routes.delete("/throw/:id", throwsController.delete);
 
 export default routes;

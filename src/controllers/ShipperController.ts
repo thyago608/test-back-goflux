@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { getCustomRepository } from "typeorm";
 import { ShippersRepository } from "../repositories/ShipperRepository";
+import { TransportersRepository } from "../repositories/TransporterRepository";
 
 /*
  {
@@ -18,6 +19,13 @@ class ShipperController {
     //Pegando as informações da requisição
     const { name, doc, about, active, site } = request.body;
 
+    //Se algum dos campos estiverem vazios
+    if (name == "" || doc == "" || about === "" || site === "" || !active) {
+      return response.status(400).json({
+        message: "Some of the fields are empty.",
+      });
+    }
+
     //Acessando o repositório de Shippers
     const shippersRepository = getCustomRepository(ShippersRepository);
 
@@ -26,9 +34,25 @@ class ShipperController {
       doc,
     });
 
+    //Se existir um registro com o mesmo doc que veio na requisição
     if (shipperAlreadyExists) {
       return response.status(400).json({
         error: "Shipper already exists!",
+      });
+    }
+
+    //Acessando o respositório de Transporter
+    const transporterRepository = getCustomRepository(TransportersRepository);
+
+    //SELECT * FROM transporters WHERE doc = doc
+    const transporterAlreadyExists = await transporterRepository.findOne({
+      doc,
+    });
+
+    //Se existir um registro com o mesmo doc que veio na requisição
+    if (transporterAlreadyExists) {
+      return response.status(400).json({
+        error: "There cannot be a shipper with the same doc as a carrier",
       });
     }
 
@@ -72,6 +96,81 @@ class ShipperController {
     }
 
     return response.status(201).json(shipperAlreadyExists);
+  }
+
+  async update(request: Request, response: Response) {
+    const { id } = request.params;
+    const { name, doc, about, site, active } = request.body;
+
+    if (name == "" || doc == "" || about === "" || site === "" || !active) {
+      return response.status(400).json({
+        error: "Some of the fields are empty.",
+      });
+    }
+
+    const shipperRepository = getCustomRepository(ShippersRepository);
+
+    const shipperAlreadyExists = await shipperRepository.findOne({
+      id: Number(id),
+    });
+
+    //Se o Shipper ( Embarcador) não existir
+    if (!shipperAlreadyExists) {
+      return response.status(400).json({
+        error: "The Shipper does not exist",
+      });
+    }
+
+    const transportersRepository = getCustomRepository(TransportersRepository);
+
+    const transporterAlreadyExists = await transportersRepository.findOne({
+      doc,
+    });
+
+    if (transporterAlreadyExists) {
+      return response.status(400).json({
+        error: "There cannot be a shipper with the same document as a carrier",
+      });
+    }
+
+    await shipperRepository.update(
+      {
+        id: Number(id),
+      },
+      {
+        name,
+        doc,
+        about,
+        site,
+        active,
+      }
+    );
+
+    return response.status(201).json({
+      message: "Update Shipper",
+    });
+  }
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const shipperRepository = getCustomRepository(ShippersRepository);
+
+    const shipperAlreadyExists = await shipperRepository.findOne({
+      id: Number(id),
+    });
+
+    if (!shipperAlreadyExists) {
+      return response.status(400).json({
+        error: "Shipper Already Not Exists",
+      });
+    }
+
+    await shipperRepository.delete({ id: Number(id) });
+
+    return response.status(201).json({
+      message: "Shipper deleted success!",
+    });
   }
 }
 

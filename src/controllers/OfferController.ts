@@ -21,6 +21,17 @@ class OfferController {
     const { id_customer, from, to, initial_value, amount, amount_type } =
       request.body;
 
+    if (
+      id_customer <= 1 ||
+      from === "" ||
+      to === "" ||
+      initial_value <= 0 ||
+      amount <= 0 ||
+      amount_type === ""
+    ) {
+      throw Error("Campo está vazio");
+    }
+
     //Referência para o repositório de Shippers ( Embarcadores )
     const shipperRepository = getCustomRepository(ShippersRepository);
 
@@ -36,6 +47,16 @@ class OfferController {
 
     //Referência para o repositório de Offers
     const offerRepository = getCustomRepository(OffersRepository);
+
+    const offerAlreadyExists = await offerRepository.findOne({
+      id_customer,
+    });
+
+    if (offerAlreadyExists) {
+      return response.status(400).json({
+        error: "Offer exists",
+      });
+    }
 
     //Salvando da tabela Offers
     const offer = offerRepository.create({
@@ -80,6 +101,75 @@ class OfferController {
     }
 
     return response.status(201).json(offerAlreadyExists);
+  }
+
+  async update(request: Request, response: Response) {
+    const { id } = request.params;
+    const { from, to, initial_value, amount, amount_type } = request.body;
+
+    if (
+      from == "" ||
+      to == "" ||
+      initial_value <= 0 ||
+      amount <= 0 ||
+      amount_type === ""
+    ) {
+      return response.status(400).json({
+        message: "Some of the fields are empty.",
+      });
+    }
+
+    const offersRepository = getCustomRepository(OffersRepository);
+
+    const offerAlreadyExists = await offersRepository.findOne({
+      id: Number(id),
+    });
+
+    //Se o Shipper ( Embarcador) não existir
+    if (!offerAlreadyExists) {
+      return response.status(400).json({
+        error: "The Offer does not exist",
+      });
+    }
+
+    await offersRepository.update(
+      {
+        id: Number(id),
+      },
+      {
+        from,
+        to,
+        initial_value,
+        amount,
+        amount_type,
+      }
+    );
+
+    return response.status(201).json({
+      message: "Update Offer",
+    });
+  }
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const offerRepository = getCustomRepository(OffersRepository);
+
+    const offerAlreadyExists = await offerRepository.findOne({
+      id: Number(id),
+    });
+
+    if (!offerAlreadyExists) {
+      return response.send(400).json({
+        error: "Offer Already Not Exists!",
+      });
+    }
+
+    await offerRepository.delete({ id: Number(id) });
+
+    return response.send(201).json({
+      message: "Offer deleted success!",
+    });
   }
 }
 
