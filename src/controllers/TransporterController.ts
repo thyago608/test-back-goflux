@@ -36,7 +36,7 @@ class TransporterController {
     });
 
     if (transporterAlreadyExists) {
-      return response.status(400).json({
+      return response.status(409).json({
         error: "Transporter already exists!",
       });
     }
@@ -48,7 +48,7 @@ class TransporterController {
     });
 
     if (shipperAlreadyExists) {
-      return response.status(400).json({
+      return response.status(422).json({
         error: "There cannot be a carrier with the same document as a shipper",
       });
     }
@@ -87,7 +87,7 @@ class TransporterController {
     });
 
     if (!transporterAlreadyExists) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "Transporter not exists",
       });
     }
@@ -112,7 +112,7 @@ class TransporterController {
     });
 
     if (!transportersAlreadyExists) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "The Transporters does not exist",
       });
     }
@@ -124,7 +124,7 @@ class TransporterController {
     });
 
     if (shipperAlreadyExists) {
-      return response.status(400).json({
+      return response.status(422).json({
         error: "There cannot be a carrier with the same document as a shipper",
       });
     }
@@ -157,7 +157,7 @@ class TransporterController {
     });
 
     if (!transporterAlreadyExists) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "Transporter Already Not Exists",
       });
     }

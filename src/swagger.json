@@ -1,0 +1,769 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Manipulação de Embarcadores, Transportadores, Ofertas e Lances",
+    "description": "Essa API REST tem como objetivo cadastrar, atualizar, deletar e obter informações de Embarcadores, Transportadores, Ofertas e Lances.",
+    "termsOfService": "http://localhost:3333/terms",
+    "contact": {
+      "email": "thyagoribeiro608@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333/",
+      "description": "API de test"
+    }
+  ],
+  "paths": {
+    "/shipper": {
+      "post": {
+        "summary": "Cadastro de Embarcadores",
+        "description": "Essa rota será responsável por cadastrar um novo Embarcador",
+        "tags": ["Embarcadores"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Shipper"
+              },
+              "examples": {
+                "shipper": {
+                  "value": {
+                    "name": "goFlux Brasil",
+                    "doc": "60.429.484/0001-10",
+                    "about": "goFlux, uma empresa especializada em inovar na contratação de fretes",
+                    "active": true,
+                    "site": "https://goflux.com.br/"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Shipper Created Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Shipper"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some of the fields are empty."
+          },
+          "409": {
+            "description": "Shipper already exists!."
+          },
+          "422": {
+            "description": "There cannot be a shipper with the same doc as a carrier."
+          }
+        }
+      },
+      "get": {
+        "description": "Busca por Embarcadores ",
+        "summary": "Essa rota será responsável por buscar todos os Embarcadores cadastrados",
+        "tags": ["Embarcadores"],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Shipper"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shipper/{id}": {
+      "get": {
+        "description": "Busca por Embarcador ",
+        "summary": "Essa rota será responsável por buscar um Embarcador pelo ID",
+        "tags": ["Embarcadores"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Embarcador",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Shipper"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Shipper not exists"
+          }
+        }
+      },
+      "put": {
+        "description": "Atualizar um Embarcador ",
+        "summary": "Essa rota será responsável por atualizar um Embarcador pelo ID",
+        "tags": ["Embarcadores"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Shipper"
+              },
+              "examples": {
+                "shipper": {
+                  "value": {
+                    "name": "goFlux Brasil",
+                    "doc": "60.429.484/0001-10",
+                    "about": "goFlux, uma empresa especializada em inovar na contratação de fretes",
+                    "active": true,
+                    "site": "https://goflux.com.br/"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Embarcador",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Update Shipper."
+          },
+          "400": {
+            "description": "Some of the fields are empty"
+          },
+          "404": {
+            "description": "The Shipper does not exist"
+          },
+          "422": {
+            "description": "There cannot be a shipper with the same document as a carrier"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletar um Embarcador por id",
+        "summary": "Essa rota será responsável por deletar um Embarcador pelo ID",
+        "tags": ["Embarcadores"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Embarcador",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Shipper deleted success"
+          },
+          "404": {
+            "description": "Shipper Already Not Exists"
+          }
+        }
+      }
+    },
+
+    "/transporter": {
+      "post": {
+        "summary": "Cadastro de Transportadores",
+        "description": "Essa rota será responsável por cadastrar um novo Transportador",
+        "tags": ["Transportadores"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Transporter"
+              },
+              "examples": {
+                "transporter": {
+                  "value": {
+                    "name": "Transportadora Rodoclub",
+                    "doc": "99.974.145/0001-50",
+                    "about": "Transportadora Rodoclub, transportando sonhos",
+                    "active": true,
+                    "site": "https://goflux.com.br/"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Transporter Created Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Transporter"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some of the fields are empty."
+          },
+          "409": {
+            "description": "Transporter already exists!."
+          },
+          "422": {
+            "description": "There cannot be a carrier with the same doc as a shipper."
+          }
+        }
+      },
+      "get": {
+        "description": "Busca por Transportadores ",
+        "summary": "Essa rota será responsável por buscar todos os Transportadores cadastrados",
+        "tags": ["Transportadores"],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Transporter"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transporter/{id}": {
+      "get": {
+        "description": "Busca por Transportador ",
+        "summary": "Essa rota será responsável por buscar um Transportador pelo ID",
+        "tags": ["Transportadores"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Transportador",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Transporter"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transporter not exists"
+          }
+        }
+      },
+      "put": {
+        "description": "Atualizar um Transportador ",
+        "summary": "Essa rota será responsável por atualizar um Transportador pelo ID",
+        "tags": ["Transportadores"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Transporter"
+              },
+              "examples": {
+                "transporter": {
+                  "value": {
+                    "name": "goFlux Brasil",
+                    "doc": "60.429.484/0001-10",
+                    "about": "goFlux, uma empresa especializada em inovar na contratação de fretes",
+                    "active": true,
+                    "site": "https://goflux.com.br/"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Embarcador",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Update Shipper."
+          },
+          "400": {
+            "description": "Some of the fields are empty"
+          },
+          "404": {
+            "description": "The Transporters does not exist"
+          },
+          "422": {
+            "description": "There cannot be a carrier with the same document as a shipper"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletar um Transportador por id",
+        "summary": "Essa rota será responsável por deletar um Transportador pelo ID",
+        "tags": ["Transportadores"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Transportador",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Transportador deleted success"
+          },
+          "404": {
+            "description": "Transportador Already Not Exists"
+          }
+        }
+      }
+    },
+
+    "/offer": {
+      "post": {
+        "summary": "Cadastro de Ofertas",
+        "description": "Essa rota será responsável por cadastrar uma oferta",
+        "tags": ["Ofertas"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Offer"
+              },
+              "examples": {
+                "transporter": {
+                  "value": {
+                    "id_customer": 1,
+                    "from": "Porto Alegre - RS",
+                    "to": "São Paulo - SP",
+                    "initial_value": 130.0,
+                    "amount": 300.0,
+                    "amount_type": "TON"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Offer Created Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Offer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some of the fields are empty."
+          },
+          "404": {
+            "description": "Offer not exists"
+          },
+          "409": {
+            "description": "Offer already exists!."
+          }
+        }
+      },
+      "get": {
+        "description": "Busca por Ofertas ",
+        "summary": "Essa rota será responsável por buscar todas as ofertas cadastradas",
+        "tags": ["Ofertas"],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Offer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/offer/{id}": {
+      "get": {
+        "description": "Busca por Ofertas ",
+        "summary": "Essa rota será responsável por buscar uma Oferta pelo ID",
+        "tags": ["Ofertas"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Ofertas",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Offer"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Offer not exists"
+          }
+        }
+      },
+      "put": {
+        "description": "Atualizar uma Oferta ",
+        "summary": "Essa rota será responsável por atualizar uma Oferta pelo ID",
+        "tags": ["Ofertas"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Offer"
+              },
+              "examples": {
+                "transporter": {
+                  "value": {
+                    "id": 1,
+                    "id_customer": 1,
+                    "from": "Porto Alegre - RS",
+                    "to": "São Paulo - SP",
+                    "initial_value": 130.0,
+                    "amount": 300.0,
+                    "amount_type": "TON"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da Oferta",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Update Offer."
+          },
+          "400": {
+            "description": "Some of the fields are empty"
+          },
+          "404": {
+            "description": "The Offer does not exist"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletar uma Oferta por id",
+        "summary": "Essa rota será responsável por deletar uma Oferta pelo ID",
+        "tags": ["Ofertas"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da Oferta",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Offer deleted success"
+          },
+          "404": {
+            "description": "Offer Already Not Exists"
+          }
+        }
+      }
+    },
+
+    "/throw": {
+      "post": {
+        "summary": "Cadastro de Lances",
+        "description": "Essa rota será responsável por cadastrar Lances",
+        "tags": ["Lances"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Throw"
+              },
+              "examples": {
+                "throw": {
+                  "value": {
+                    "id_provider": 12,
+                    "id_offer": 1,
+                    "value": 105.0,
+                    "amount": 230.0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Throw Created Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Throw"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some of the fields are empty."
+          },
+          "404": {
+            "description": "Throw not exists"
+          },
+          "409": {
+            "description": "Throw already exists!."
+          }
+        }
+      },
+      "get": {
+        "description": "Busca por Lances ",
+        "summary": "Essa rota será responsável por buscar todas os lances cadastrados",
+        "tags": ["Lances"],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Throw"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/throw/{id}": {
+      "get": {
+        "description": "Busca por Lances ",
+        "summary": "Essa rota será responsável por buscar um Lance pelo ID",
+        "tags": ["Lances"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Lance",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Throw"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Throw not exists"
+          }
+        }
+      },
+      "put": {
+        "description": "Atualizar um Lance ",
+        "summary": "Essa rota será responsável por atualizar um lance pelo ID",
+        "tags": ["Lances"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Throw"
+              },
+              "examples": {
+                "transporter": {
+                  "value": {
+                    "id_provider": 12,
+                    "id_offer": 1,
+                    "value": 105.0,
+                    "amount": 230.0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Lance",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Update Throw."
+          },
+          "400": {
+            "description": "Some of the fields are empty"
+          },
+          "404": {
+            "description": "The Throw does not exist"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletar um lance por id",
+        "summary": "Essa rota será responsável por deletar um lance pelo ID",
+        "tags": ["Lances"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Lance",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Throw deleted success"
+          },
+          "404": {
+            "description": "Throw Already Not Exists"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Shipper": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "doc": {
+            "type": "string"
+          },
+          "about": {
+            "type": "string"
+          },
+          "site": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Transporter": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "doc": {
+            "type": "string"
+          },
+          "about": {
+            "type": "string"
+          },
+          "site": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Offer": {
+        "type": "object",
+        "properties": {
+          "id_customer": {
+            "type": "integer"
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "initial_value": {
+            "type": "integer"
+          },
+          "amount": {
+            "type": "integer"
+          },
+          "amount_type": {
+            "type": "string"
+          }
+        }
+      },
+
+      "Throw": {
+        "type": "object",
+        "properties": {
+          "id_provider": {
+            "type": "integer"
+          },
+          "id_offer": {
+            "type": "integer"
+          },
+          "value": {
+            "type": "integer"
+          },
+          "amount": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

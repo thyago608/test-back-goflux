@@ -28,9 +28,10 @@ class OfferController {
       initial_value <= 0 ||
       amount <= 0 ||
       amount_type === ""
-    ) {
-      throw Error("Campo está vazio");
-    }
+    )
+      return response.status(400).json({
+        error: "Some of the fields are empty",
+      });
 
     //Referência para o repositório de Shippers ( Embarcadores )
     const shipperRepository = getCustomRepository(ShippersRepository);
@@ -40,7 +41,7 @@ class OfferController {
     });
 
     if (!shipperAlreadyExists) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "Shipper does not exists!",
       });
     }
@@ -53,7 +54,7 @@ class OfferController {
     });
 
     if (offerAlreadyExists) {
-      return response.status(400).json({
+      return response.status(409).json({
         error: "Offer exists",
       });
     }
@@ -95,7 +96,7 @@ class OfferController {
     });
 
     if (!offerAlreadyExists) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "Offer not exists",
       });
     }
@@ -127,7 +128,7 @@ class OfferController {
 
     //Se o Shipper ( Embarcador) não existir
     if (!offerAlreadyExists) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "The Offer does not exist",
       });
     }
@@ -160,7 +161,7 @@ class OfferController {
     });
 
     if (!offerAlreadyExists) {
-      return response.send(400).json({
+      return response.send(404).json({
         error: "Offer Already Not Exists!",
       });
     }

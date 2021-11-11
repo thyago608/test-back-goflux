@@ -36,7 +36,7 @@ class ShipperController {
 
     //Se existir um registro com o mesmo doc que veio na requisição
     if (shipperAlreadyExists) {
-      return response.status(400).json({
+      return response.status(409).json({
         error: "Shipper already exists!",
       });
     }
@@ -51,7 +51,7 @@ class ShipperController {
 
     //Se existir um registro com o mesmo doc que veio na requisição
     if (transporterAlreadyExists) {
-      return response.status(400).json({
+      return response.status(422).json({
         error: "There cannot be a shipper with the same doc as a carrier",
       });
     }
@@ -77,7 +77,7 @@ class ShipperController {
 
     const all = await shippersRepository.find();
 
-    return response.json(all);
+    return response.status(201).json(all);
   }
 
   async showOne(request: Request, response: Response) {
@@ -90,7 +90,7 @@ class ShipperController {
     });
 
     if (!shipperAlreadyExists) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "Shipper not exists",
       });
     }
@@ -116,7 +116,7 @@ class ShipperController {
 
     //Se o Shipper ( Embarcador) não existir
     if (!shipperAlreadyExists) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "The Shipper does not exist",
       });
     }
@@ -128,7 +128,7 @@ class ShipperController {
     });
 
     if (transporterAlreadyExists) {
-      return response.status(400).json({
+      return response.status(422).json({
         error: "There cannot be a shipper with the same document as a carrier",
       });
     }
@@ -161,7 +161,7 @@ class ShipperController {
     });
 
     if (!shipperAlreadyExists) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "Shipper Already Not Exists",
       });
     }
