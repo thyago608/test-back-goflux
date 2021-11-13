@@ -17,8 +17,7 @@
   "scripts": {
     "start": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts",
     "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
-    "test": "NODE_ENV=test jest",
-    "posttest": "rm ./src/database/database.test.sqlite"
+    "test": "NODE_ENV=test jest"
   },
   "dependencies": {
     "dotenv": "^10.0.0",

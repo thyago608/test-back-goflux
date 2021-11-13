@@ -21,8 +21,13 @@ class OfferController {
     const { id_customer, from, to, initial_value, amount, amount_type } =
       request.body;
 
+    //Referência para o repositório de Shippers ( Embarcadores )
+    const shipperRepository = getCustomRepository(ShippersRepository);
+
+    const totalRegistersShippers = await shipperRepository.count();
+
     if (
-      id_customer <= 1 ||
+      id_customer <= 0 ||
       from === "" ||
       to === "" ||
       initial_value <= 0 ||
@@ -32,9 +37,6 @@ class OfferController {
       return response.status(400).json({
         error: "Some of the fields are empty",
       });
-
-    //Referência para o repositório de Shippers ( Embarcadores )
-    const shipperRepository = getCustomRepository(ShippersRepository);
 
     const shipperAlreadyExists = await shipperRepository.findOne({
       id: id_customer,
@@ -161,14 +163,14 @@ class OfferController {
     });
 
     if (!offerAlreadyExists) {
-      return response.send(404).json({
+      return response.status(404).json({
         error: "Offer Already Not Exists!",
       });
     }
 
     await offerRepository.delete({ id: Number(id) });
 
-    return response.send(201).json({
+    return response.status(201).json({
       message: "Offer deleted success!",
     });
   }

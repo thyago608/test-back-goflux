@@ -19,7 +19,7 @@
     "/shipper": {
       "post": {
         "summary": "Cadastro de Embarcadores",
-        "description": "Essa rota será responsável por cadastrar um novo Embarcador",
+        "description": "Essa rota será responsável por cadastrar um Embarcador. Não será possível, cadastrar um Embarcador com a mesma 'doc' de uma transportadora.",
         "tags": ["Embarcadores"],
         "requestBody": {
           "content": {
@@ -65,8 +65,8 @@
         }
       },
       "get": {
-        "description": "Busca por Embarcadores ",
-        "summary": "Essa rota será responsável por buscar todos os Embarcadores cadastrados",
+        "summary": "Buscar por Embarcadores",
+        "description": "Essa rota será responsável por buscar todos os Embarcadores cadastrados.",
         "tags": ["Embarcadores"],
         "responses": {
           "201": {
@@ -86,8 +86,8 @@
     },
     "/shipper/{id}": {
       "get": {
-        "description": "Busca por Embarcador ",
-        "summary": "Essa rota será responsável por buscar um Embarcador pelo ID",
+        "summary": "Buscar Embarcador pelo ID",
+        "description": "Essa rota será responsável por buscar um Embarcador pelo ID",
         "tags": ["Embarcadores"],
         "parameters": [
           {
@@ -114,8 +114,8 @@
         }
       },
       "put": {
-        "description": "Atualizar um Embarcador ",
-        "summary": "Essa rota será responsável por atualizar um Embarcador pelo ID",
+        "summary": "Atualizar um Embarcador",
+        "description": "Essa rota será responsável por atualizar um Embarcador pelo ID",
         "tags": ["Embarcadores"],
         "requestBody": {
           "content": {
@@ -161,8 +161,8 @@
         }
       },
       "delete": {
-        "description": "Deletar um Embarcador por id",
-        "summary": "Essa rota será responsável por deletar um Embarcador pelo ID",
+        "summary": "Deletar um Embarcador",
+        "description": "Essa rota será responsável por deletar um Embarcador pelo ID",
         "tags": ["Embarcadores"],
         "parameters": [
           {
@@ -186,7 +186,7 @@
     "/transporter": {
       "post": {
         "summary": "Cadastro de Transportadores",
-        "description": "Essa rota será responsável por cadastrar um novo Transportador",
+        "description": "Essa rota será responsável por cadastrar uma Transportadora. Não será possível, cadastrar uma Transportadora com a mesma 'doc' de um Embarcador.",
         "tags": ["Transportadores"],
         "requestBody": {
           "content": {
@@ -232,8 +232,8 @@
         }
       },
       "get": {
-        "description": "Busca por Transportadores ",
-        "summary": "Essa rota será responsável por buscar todos os Transportadores cadastrados",
+        "summary": "Buscar por Transportadores",
+        "description": "Essa rota será responsável por buscar todos os Transportadores cadastrados",
         "tags": ["Transportadores"],
         "responses": {
           "201": {
@@ -253,8 +253,8 @@
     },
     "/transporter/{id}": {
       "get": {
-        "description": "Busca por Transportador ",
-        "summary": "Essa rota será responsável por buscar um Transportador pelo ID",
+        "summary": "Buscar Transportadora pelo ID",
+        "description": "Essa rota será responsável por buscar um Transportador pelo ID",
         "tags": ["Transportadores"],
         "parameters": [
           {
@@ -281,8 +281,8 @@
         }
       },
       "put": {
-        "description": "Atualizar um Transportador ",
-        "summary": "Essa rota será responsável por atualizar um Transportador pelo ID",
+        "summary": "Atualizar um transportador",
+        "description": "Essa rota será responsável por atualizar um Transportador pelo ID",
         "tags": ["Transportadores"],
         "requestBody": {
           "content": {
@@ -328,8 +328,8 @@
         }
       },
       "delete": {
-        "description": "Deletar um Transportador por id",
-        "summary": "Essa rota será responsável por deletar um Transportador pelo ID",
+        "summary": "Deletar um Transportador",
+        "description": "Essa rota será responsável por deletar um Transportador pelo ID",
         "tags": ["Transportadores"],
         "parameters": [
           {
@@ -353,7 +353,7 @@
     "/offer": {
       "post": {
         "summary": "Cadastro de Ofertas",
-        "description": "Essa rota será responsável por cadastrar uma oferta",
+        "description": "Essa rota será responsável por cadastrar uma oferta. Só é possível cadastrar uma oferta para um ID de Embarcador que existente.",
         "tags": ["Ofertas"],
         "requestBody": {
           "content": {
@@ -389,10 +389,10 @@
             }
           },
           "400": {
-            "description": "Some of the fields are empty."
+            "description": "Some fields are empty or provider id or offer id is invalid."
           },
           "404": {
-            "description": "Offer not exists"
+            "description": "Shipper does not exists!"
           },
           "409": {
             "description": "Offer already exists!."
@@ -400,8 +400,8 @@
         }
       },
       "get": {
-        "description": "Busca por Ofertas ",
-        "summary": "Essa rota será responsável por buscar todas as ofertas cadastradas",
+        "summary": "Buscar por Ofertas",
+        "description": "Essa rota será responsável por buscar todas as ofertas cadastradas",
         "tags": ["Ofertas"],
         "responses": {
           "201": {
@@ -422,8 +422,8 @@
 
     "/offer/{id}": {
       "get": {
-        "description": "Busca por Ofertas ",
-        "summary": "Essa rota será responsável por buscar uma Oferta pelo ID",
+        "summary": "Buscar Oferta pelo ID",
+        "description": "Essa rota será responsável por buscar uma Oferta pelo ID",
         "tags": ["Ofertas"],
         "parameters": [
           {
@@ -450,8 +450,8 @@
         }
       },
       "put": {
-        "description": "Atualizar uma Oferta ",
-        "summary": "Essa rota será responsável por atualizar uma Oferta pelo ID",
+        "summary": "Atualizar uma Oferta",
+        "description": "Essa rota será responsável por atualizar uma Oferta pelo ID",
         "tags": ["Ofertas"],
         "requestBody": {
           "content": {
@@ -462,8 +462,6 @@
               "examples": {
                 "transporter": {
                   "value": {
-                    "id": 1,
-                    "id_customer": 1,
                     "from": "Porto Alegre - RS",
                     "to": "São Paulo - SP",
                     "initial_value": 130.0,
@@ -496,8 +494,8 @@
         }
       },
       "delete": {
-        "description": "Deletar uma Oferta por id",
-        "summary": "Essa rota será responsável por deletar uma Oferta pelo ID",
+        "summary": "Deletar Oferta",
+        "description": "Essa rota será responsável por deletar uma Oferta pelo ID",
         "tags": ["Ofertas"],
         "parameters": [
           {
@@ -544,7 +542,7 @@
         },
         "responses": {
           "201": {
-            "description": "Throw Created Successfully.",
+            "description": "Throw created for Offer.",
             "content": {
               "application/json": {
                 "schema": {
@@ -558,7 +556,7 @@
             "description": "Some of the fields are empty."
           },
           "404": {
-            "description": "Throw not exists"
+            "description": "Cannot create bid as the offer does not exist"
           },
           "409": {
             "description": "Throw already exists!."
@@ -566,8 +564,8 @@
         }
       },
       "get": {
-        "description": "Busca por Lances ",
-        "summary": "Essa rota será responsável por buscar todas os lances cadastrados",
+        "summary": "Buscar por Lances",
+        "description": "Essa rota será responsável por buscar todas os lances cadastrados",
         "tags": ["Lances"],
         "responses": {
           "201": {
@@ -588,8 +586,8 @@
 
     "/throw/{id}": {
       "get": {
-        "description": "Busca por Lances ",
-        "summary": "Essa rota será responsável por buscar um Lance pelo ID",
+        "summary": "Buscar Lances pelo ID",
+        "description": "Essa rota será responsável por buscar um Lance pelo ID",
         "tags": ["Lances"],
         "parameters": [
           {
@@ -616,8 +614,8 @@
         }
       },
       "put": {
-        "description": "Atualizar um Lance ",
-        "summary": "Essa rota será responsável por atualizar um lance pelo ID",
+        "summary": "Atualizar um Lance",
+        "description": "Essa rota será responsável por atualizar um lance pelo ID",
         "tags": ["Lances"],
         "requestBody": {
           "content": {
@@ -626,7 +624,7 @@
                 "$ref": "#/components/schemas/Throw"
               },
               "examples": {
-                "transporter": {
+                "throw": {
                   "value": {
                     "id_provider": 12,
                     "id_offer": 1,
@@ -659,8 +657,8 @@
         }
       },
       "delete": {
-        "description": "Deletar um lance por id",
-        "summary": "Essa rota será responsável por deletar um lance pelo ID",
+        "summary": "Deletar um Lance",
+        "description": "Essa rota será responsável por deletar um lance pelo ID",
         "tags": ["Lances"],
         "parameters": [
           {

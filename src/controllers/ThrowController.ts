@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { getCustomRepository, getConnection } from "typeorm";
 import { OffersRepository } from "../repositories/OfferRepository";
 import { ThrowsRepository } from "../repositories/ThrowRepository";
+import { ShippersRepository } from "../repositories/ShipperRepository";
 
 /*
     {
@@ -19,7 +20,7 @@ class ThrowController {
 
     if (id_provider <= 0 || id_offer <= 0 || value <= 0 || amount <= 0) {
       return response.status(400).json({
-        message: "Some of the fields are empty.",
+        message: "Some fields are empty or provider id or offer id is invalid.",
       });
     }
 
@@ -31,13 +32,24 @@ class ThrowController {
       id_customer: id_provider,
     });
 
-    if (offerAlreadyExists) {
-      return response.status(400).json({
-        error: "Throw already exists",
+    if (!offerAlreadyExists) {
+      return response.status(404).json({
+        error: "Cannot create bid as the offer does not exist",
       });
     }
 
     const throwRepository = getCustomRepository(ThrowsRepository);
+
+    const throwsAlreadyExists = await throwRepository.findOne({
+      id_provider,
+      id_offer,
+    });
+
+    if (throwsAlreadyExists) {
+      return response.status(409).json({
+        error: "Throw Already Exists",
+      });
+    }
 
     const bidForOffer = throwRepository.create({
       id_provider,
@@ -71,7 +83,7 @@ class ThrowController {
     });
 
     if (!throwAlreadyExists) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "Throw not exists",
       });
     }
@@ -96,7 +108,7 @@ class ThrowController {
     });
 
     if (!throwsAlreadyExists) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "The Throws does not exist",
       });
     }
@@ -126,14 +138,14 @@ class ThrowController {
     });
 
     if (!throwAlreadyExists) {
-      return response.send(400).json({
+      return response.status(404).json({
         error: "Throw Already Not Exists!",
       });
     }
 
     await throwsRepository.delete({ id: Number(id) });
 
-    return response.send(201).json({
+    return response.status(201).json({
       message: "Throw deleted success!",
     });
   }
