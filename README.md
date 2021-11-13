@@ -37,11 +37,20 @@ O projeto foi desenvolvido com as seguintes tecnologias:
     $ yarn start
 ```
 
-# Documentação para Consumo dos Endpoints.
+## Documentação para Consumo dos Endpoints.
 
 http://localhost:3333/api-docs/
 
 
-*Observação*: Ao executar a aplicação, a mesma estará rodando na porta 3333 do seu localhost.
+*Observação*: Ao executar a aplicação, a mesma estará rodando na porta 3333 do seu localhost.</br></br>
 
+
+## Executando testes na aplicação
+
+Os testes devem ser executados na seguinte ordem:
+
+- 001_Shipper.test.ts
+- 002_Transporter.test.ts
+- 003_Offer.test.ts
+- 004_Throw.test.ts
 
